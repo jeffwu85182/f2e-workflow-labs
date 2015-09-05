@@ -45,7 +45,8 @@ bower_components/
 
 build/
 dist/
-assets/vendor/
+assets/*
+output*
 
 
 ### Sass ###
