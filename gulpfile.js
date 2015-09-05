@@ -7,6 +7,9 @@
 
 var gulp = require('gulp');
 var del = require('del');
+var concat = require('gulp-concat');
+var uglify = require('gulp-uglify');
+var rename = require('gulp-rename');
 
 gulp.task('default', ['output2', 'clean'], function (){
 	console.log('My Default Task');
@@ -31,8 +34,43 @@ gulp.task('clean', function(cb) {
     	.then(cb)
 });
 
-
-gulp.task('back', function (){
-	gulp.src('assets/vendor/bootstrap/dist/**/*.js', { base: 'assets/vendor' })
-		.pipe(gulp.dest('output2'));
+gulp.task('watch', function() {
+	gulp.watch('app/**/*.js',['default']);
 });
+
+gulp.task('concat-app', function() {
+	gulp.src('app/**/*.module.js')
+		.pipe(gulp.dest('src'))
+		.pipe(concat('app.modules.js'))
+		.pipe(gulp.dest('assets'))
+		.pipe(uglify({mangle: false}))
+		.pipe(rename({extname: '.min.js'}))
+		.pipe(gulp.dest('assets'));
+
+	gulp.src(['app/**/*.js', '!app/**/*.module.js'])
+		.pipe(gulp.dest('src'))
+		.pipe(concat('app.bundles.js'))
+		.pipe(gulp.dest('assets'))
+		.pipe(uglify({mangle: false}))
+		.pipe(rename({extname: '.min.js'}))
+		.pipe(gulp.dest('assets'));
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

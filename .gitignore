@@ -47,7 +47,7 @@ build/
 dist/
 assets/*
 output*
-
+src
 
 ### Sass ###
 .sass-cache/
